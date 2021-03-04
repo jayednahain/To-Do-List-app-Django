@@ -40,10 +40,10 @@ def todolist_function(request):
       return redirect('todolist_link')
    else:
       all_task = TaskList.objects.all()
-      '''value_limit_per_page = 5
-      paginator = Paginator(all_task,value_limit_per_page)
-      page= request.GET.get('pg')
-      all_task=paginator.get_page(page)'''
+      #'''value_limit_per_page = 5
+      #paginator = Paginator(all_task,value_limit_per_page)
+      #page= request.GET.get('pg')
+	  #all_task=paginator.get_page(page)'''
 
       context = {
          'welcome_text': "welcome to todo list page",
