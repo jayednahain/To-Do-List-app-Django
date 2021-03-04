@@ -3,7 +3,8 @@ from django.urls import path,include
 from todolist_app import views
 
 urlpatterns = [
-    path('',views.todolist_function,name='todolist_link'),
+    path('',views.index_function,name='index_function_link'),
+    path('task/',views.todolist_function,name='todolist_link'),
 
 
     path('delete/<task_id>',views.delete_task, name ='delete_task_link'),

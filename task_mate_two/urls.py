@@ -5,16 +5,12 @@
 """
 from django.contrib import admin
 from django.urls import path,include
-from todolist_app import views as todolist_view
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',include('todolist_app.urls')),
 
-    path('',todolist_view.index_function,name='index_function_link'),
-
-    path('task/',include('todolist_app.urls')),
-    path('booklesson/',include('book_lesson_app.urls'))
-
-
-
-]
+]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
