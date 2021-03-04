@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>{{ title_heading }}</title>
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+
+
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+
+           <form method="POST" class="form-controll">
+                {% csrf_token %}
+                <label class="col-lg-2"> Enter your daily Task</label>
+
+                <input type="text" class="form-control col-lg-4" name="task" placeholder="Enter New Task Here">
+                <hr class="my-3">
+                <button type="submit" class="btn btn-primary col-lg-2">Add Task</button>
+           </form>
+      </div>
+    </div>
+
+
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+
+
+            <table class="table table-bordered text-center">
+                  <thead class="thead-dark">
+                    <tr class="row">
+                      <th class="col-5">Task</th>
+                      <th class="col-4">Done</th>
+                      <th class="col-2">Edit</th>
+                      <th class="col-1">Delete</th>
+                    </tr>
+                  </thead>
+            <tbody>
+            {% if all_task %}
+                {% for task in all_task  %}
+                    {% if task.done %}
+                        <tr class="table-success row">
+                            <td class="col-5">{{ task.task }}</td>
+                            <td class="col-4"><a href="{% url 'pending_task_link' task.id %}"><img src="{% static 'image/checked-blacked.png' %}" width="40" height="40"></a></td>
+                            <td class="col-2"><a class="btn btn-dark" href="{% url 'edit_task_link' task.id %}">Edit</a></td>
+                            <td class="col-1"><a href="{% url 'delete_task_link' task.id %}"><img src="{% static 'image/delete-button.png' %}" width="40" height="30"></a></td>
+
+                        </tr>
+                    {% else %}
+                        <tr class="row">
+                            <td class="col-5">{{ task.task }}</td>
+                            <td class="col-4"><a href="{% url 'complete_task_link' task.id %}"><img src="{% static 'image/check-white.png' %}" width="40" height="40"></a> </td>
+                            <td class="col-2"><a class="btn btn-dark" href="{% url 'edit_task_link' task.id %}">Edit</a></td>
+                            <td class="col-1"><a href="{% url 'delete_task_link' task.id %}"><img src="{% static 'image/delete-button.png' %}" width="40" height="30"></a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+
+          </tbody>
+        </table>
+
+    <br>
+
+
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end">
+
+                <li class="page-item"><a class="btn btn-dark" href="?pg=1"><<<</a></li>
+                {% if all_task.has_previous %}
+                    <li class="page-item"><a class="btn btn-dark" href="?pg={{ all_task.previous_page_number }}">{{ all_task.previous_page_number }}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="btn btn-dark" href="?pg={{ all_task.number }}">{{ all_task.number }}</a></li>
+                {% if all_task.has_next %}
+                    <li class="page-item"><a class="btn btn-dark" href="?pg={{ all_task.next_page_number }}">{{ all_task.next_page_number }}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="btn btn-dark" href="?pg={{ all_task.paginator.num_pages }}">>>></a></li>
+              </ul>
+            </nav>
+
+
+    </div>
+
+
+
+
+
+{% endblock body %}

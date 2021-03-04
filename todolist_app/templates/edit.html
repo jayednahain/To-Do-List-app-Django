@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}
+    <title>{{ title_heading }}</title>
+{% endblock title %}
+
+
+{% block body %}
+    <br>
+    <div class="container">
+            <div class="jumbotron">
+
+                <h1 class="display-4">{{ welcome_text }}</h1>
+                <p class="lead"></p>
+                <hr class="my-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" class="form-control col-lg-4" name="task" placeholder="{{ edit_object.task }}" value="{{ edit_object.task }}">
+                    <input type="hidden" name="done"  value="{{ edit_object.done }}">
+                    <br>
+                    <br>
+                    <p class="lead">
+                        <button type="submit" class="btn btn-primary col-lg-2">Edit task</button>
+                    </p>
+                </form>
+            </div>
+
+
+    </div>
+
+
+
+{% endblock %}
